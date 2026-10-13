@@ -61,6 +61,15 @@ personal_plan.md
 **/claude.md
 
 backend/data/course_data
+
+# Playwright artifacts
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Throwaway issue draft (copy into GitHub, then delete)
+/db-test-strategy-issue.md
 # --------------------------------------------------------
 # BEGIN Explictly Allowed Files (i.e. do NOT ignore these)
 # --------------------------------------------------------
