@@ -1,6 +1,7 @@
 
 import express from 'express'
 import cors from 'cors'
+import { pathToFileURL } from 'node:url'
 import { supabase } from './db.js'
 import { getCached } from './cache.js'
 import { usableBuildings, validBuildings, validCounts } from './validate.js'
@@ -148,8 +149,14 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' })
 });
 
-app.listen(port, () => {
-  // Not necessarily localhost: on a host, `port` comes from process.env.PORT
-  // (Render uses 10000) and sits behind their proxy, which serves 443 publicly.
-  console.log(`API listening on port ${port}`)
-});
+// Start the server only when run directly -- not when imported by the test
+// suite, which exercises the app object without binding a port.
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  app.listen(port, () => {
+    // Not necessarily localhost: on a host, `port` comes from process.env.PORT
+    // (Render uses 10000) and sits behind their proxy, which serves 443 publicly.
+    console.log(`API listening on port ${port}`)
+  })
+}
+
+export { app }

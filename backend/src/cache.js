@@ -17,3 +17,9 @@ export async function getCached(key, ttlMs, fn, validate) {
   store.set(key, { value, expiresAt: Date.now() + ttlMs })
   return value
 }
+
+// Test-only: clear the in-process cache between integration tests so a cached
+// read from one test can't satisfy another. Not used by the running server.
+export function resetCache() {
+  store.clear()
+}
